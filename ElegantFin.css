@@ -101,18 +101,6 @@
 }
 
 /* =========================
-   Item details
-   ========================= */
-
-/* Hide Rotten Tomatoes critic rating */
-.mediaInfoCriticRating,
-.mediaInfoCriticRatingFresh,
-.mediaInfoCriticRatingRotten,
-[class*="mediaInfoCriticRating"] {
-    display: none !important;
-}
-
-/* =========================
    Player
    ========================= */
 
