@@ -1,0 +1,87 @@
+@import url("https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css");
+@import url("https://cdn.jsdelivr.net/gh/KartoffelChipss/Jellyfin-Lucide@main/theme/jellyfin-lucide.css");
+
+/* =========================
+   Cards
+   ========================= */
+
+/* Unseen episode count */
+.countIndicator {
+    color: white !important;
+}
+
+/* Completed indicator */
+.playedIndicator {
+    background: rgb(34, 197, 94) !important;
+    color: white !important;
+}
+
+.playedIndicator .material-icons,
+.playedIndicator [class*="material-icons"] {
+    color: white !important;
+}
+
+/* =========================
+   Player
+   ========================= */
+
+/* Hide chapter markers */
+.videoOsdBottom .sliderMarkerContainer {
+    display: none !important;
+}
+
+/* Hide chapter title from trickplay preview */
+.chapterThumbText-dim {
+    display: none !important;
+}
+
+/* Hide previous/next chapter and track buttons */
+.videoOsdBottom .btnPreviousChapter,
+.videoOsdBottom .btnNextChapter,
+.videoOsdBottom .btnPreviousTrack,
+.videoOsdBottom .btnNextTrack {
+    display: none !important;
+}
+
+/* Rewind and fast-forward buttons */
+.videoOsdBottom .btnRewind,
+.videoOsdBottom .btnFastForward {
+    position: relative;
+}
+
+/* Hide Jellyfin's original seek icons */
+.videoOsdBottom .btnRewind > .material-icons,
+.videoOsdBottom .btnFastForward > .material-icons {
+    visibility: hidden !important;
+}
+
+/* Material Icons Round seek icons */
+.videoOsdBottom .btnRewind::before,
+.videoOsdBottom .btnFastForward::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Material Icons Round" !important;
+    font-size: 1.8em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    color: currentColor;
+    pointer-events: none;
+    -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+}
+
+/* Seek backward 10 seconds */
+.videoOsdBottom .btnRewind::before {
+    content: "replay_10";
+}
+
+/* Seek forward 10 seconds */
+.videoOsdBottom .btnFastForward::before {
+    content: "forward_10";
+}
