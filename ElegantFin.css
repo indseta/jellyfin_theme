@@ -92,12 +92,23 @@
 /* Unseen episode count */
 .countIndicator {
     color: white !important;
+    -webkit-text-fill-color: white !important;
 }
 
 /* Completed indicator */
-.playedIndicator,
-.playedIndicator .material-icons {
+.playedIndicator {
     color: white !important;
+}
+
+/* Completed checkmark */
+.playedIndicator .indicatorIcon,
+.playedIndicator .indicatorIcon::before,
+.playedIndicator .material-icons,
+.playedIndicator .material-icons::before {
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+    fill: white !important;
+    stroke: white !important;
 }
 
 /* =========================
@@ -168,4 +179,9 @@
 /* Seek forward 10 seconds */
 .videoOsdBottom .btnFastForward::before {
     content: "forward_10";
+}
+
+/* Hide Rotten Tomatoes rating */
+.mediaInfoCriticRating {
+    display: none !important;
 }
