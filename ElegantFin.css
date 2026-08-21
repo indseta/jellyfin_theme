@@ -101,6 +101,18 @@
 }
 
 /* =========================
+   Item details
+   ========================= */
+
+/* Hide Rotten Tomatoes critic rating */
+.mediaInfoCriticRating,
+.mediaInfoCriticRatingFresh,
+.mediaInfoCriticRatingRotten,
+[class*="mediaInfoCriticRating"] {
+    display: none !important;
+}
+
+/* =========================
    Player
    ========================= */
 
@@ -168,9 +180,4 @@
 /* Seek forward 10 seconds */
 .videoOsdBottom .btnFastForward::before {
     content: "forward_10";
-}
-
-/* Hide Rotten Tomatoes rating */
-.mediaInfoCriticRating {
-    display: none !important;
 }
