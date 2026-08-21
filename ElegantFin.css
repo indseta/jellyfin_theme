@@ -114,9 +114,11 @@
     display: none !important;
 }
 
-/* Hide previous and next chapter buttons */
+/* Hide outer previous/next chapter and track buttons */
 .videoOsdBottom .btnPreviousChapter,
-.videoOsdBottom .btnNextChapter {
+.videoOsdBottom .btnNextChapter,
+.videoOsdBottom .btnPreviousTrack,
+.videoOsdBottom .btnNextTrack {
     display: none !important;
 }
 
@@ -126,39 +128,49 @@
     position: relative;
 }
 
-/* Hide original Jellyfin seek icons */
+/* Hide Jellyfin's original seek icons */
 .videoOsdBottom .btnRewind > .material-icons,
 .videoOsdBottom .btnFastForward > .material-icons {
     visibility: hidden !important;
 }
 
-/* Shared Lucide seek icon styling */
+/* Jellyfin / ElegantFin Material Symbols seek icons */
 .videoOsdBottom .btnRewind::before,
 .videoOsdBottom .btnFastForward::before {
-    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 1.8em;
-    height: 1.8em;
     transform: translate(-50%, -50%);
-    background-color: currentColor;
-    -webkit-mask-position: center;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: contain;
-    mask-position: center;
-    mask-repeat: no-repeat;
-    mask-size: contain;
+    font-family: var(--iconPack), "Material Icons" !important;
+    font-size: 1.8em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    color: currentColor;
+    pointer-events: none;
+    -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+    font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 48;
 }
 
-/* Seek backward */
+/* Seek backward 10 seconds */
 .videoOsdBottom .btnRewind::before {
-    -webkit-mask-image: url("https://unpkg.com/lucide-static@latest/icons/undo-2.svg");
-    mask-image: url("https://unpkg.com/lucide-static@latest/icons/undo-2.svg");
+    content: "replay_10";
 }
 
-/* Seek forward */
+/* Seek forward 10 seconds */
 .videoOsdBottom .btnFastForward::before {
-    -webkit-mask-image: url("https://unpkg.com/lucide-static@latest/icons/redo-2.svg");
-    mask-image: url("https://unpkg.com/lucide-static@latest/icons/redo-2.svg");
+    content: "forward_10";
+}
+
+/* Hide Rotten Tomatoes rating */
+.mediaInfoCriticRating {
+    display: none !important;
 }
