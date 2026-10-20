@@ -1,6 +1,35 @@
 @import url("https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css");
 
 /* =========================
+   Corner radius
+   ========================= */
+
+/* 5px wherever Abyss uses its radius variable (default 12px) */
+:root {
+    --abyss-radius: 5px;
+}
+
+/* 5px on panels and controls Abyss rounds with fixed values; pills and circles stay round */
+/* The #image entry lifts the whole list above Abyss' own !important rules */
+:root :is(
+    .MuiDrawer-paper, .MuiListItemButton-root, .mainDrawer, .editPageSidebar, .navMenuOption,
+    .MuiMenu-paper, .MuiMenu-paper .MuiButtonBase-root,
+    .dialog, .dialog-fullscreen, .toast, .appfooter, .pageTitle,
+    .videoOsdBottom, .videoOsdBottom .osdControls, .iconOsd, .upNextContainer, .playerStats, .playerStats-stats,
+    .nowPlayingBar, .nowPlayingBar .nowPlayingImage,
+    .detailImageContainer .card, .detailImageContainer .cardImageContainer,
+    .emby-select, .checkboxOutline, #inputTextColor,
+    header.MuiAppBar-root .MuiButtonGroup-root .MuiButtonBase-root,
+    .manualLoginForm, #image, #uploadImage,
+    #userProfilePage .readOnlyContent, .readOnlyContent .verticalSection, .readOnlyContent .adminSection, .readOnlyContent .userSection,
+    #languagePreferencesPage .settingsContainer .verticalSection, .subtitleAppearanceSection,
+    .homeScreenSettingsContainer .perLibrarySettings, .homeScreenSettingsContainer .verticalSection-extrabottompadding, .homeScreenSettingsContainer .paperList,
+    .settingsContainer .MuiStack-root .MuiStack-root
+) {
+    border-radius: 5px !important;
+}
+
+/* =========================
    Header
    ========================= */
 
@@ -10,9 +39,252 @@ header.MuiAppBar-root > .MuiToolbar-root > .MuiStack-root:first-of-type {
     transform: translateX(-50%) !important;
 }
 
+/* Header icon buttons (not the avatar) as round glass buttons, styled like the nav pill */
+html[data-theme="dark"] header.MuiAppBar-root .MuiButtonBase-root.MuiIconButton-root:not(:has(.MuiAvatar-root)) {
+    border-radius: 50% !important;
+    background-color: transparent !important;
+    border: 1px solid rgba(87, 87, 87, 0);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(var(--abyss-glass-blur)) !important;
+    backdrop-filter: blur(var(--abyss-glass-blur)) !important;
+    transition: background-color 0.45s var(--abyss-ease), border-color 0.45s var(--abyss-ease), color 0.25s var(--abyss-ease), box-shadow 0.25s var(--abyss-ease);
+}
+
+/* Same glass fill and border as the pill once the page is scrolled */
+html[data-theme="dark"] header.MuiAppBar-root.MuiPaper-elevation1 .MuiButtonBase-root.MuiIconButton-root:not(:has(.MuiAvatar-root)) {
+    background-color: rgba(var(--abyss-glass-tint), 0.69) !important;
+    border-color: rgba(87, 87, 87, 0.18);
+}
+
+/* Hover like the pill's items: brighter icon and a light overlay on top of the glass */
+html[data-theme="dark"] header.MuiAppBar-root .MuiButtonBase-root.MuiIconButton-root:not(:has(.MuiAvatar-root)):hover {
+    color: rgb(var(--abyss-accent));
+    box-shadow: inset 0 0 0 100px rgba(var(--abyss-accent), 0.12), 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Rename the server button to "Home" (server name stays Jellyfin) */
+header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) {
+    font-size: 0;
+}
+
+/* Hide the label if it's wrapped in an element */
+header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) > :not(.MuiButton-icon, .MuiButton-startIcon, .MuiTouchRipple-root) {
+    display: none;
+}
+
+/* New label (try 0.875rem if it doesn't match the other buttons) */
+header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
+    content: "Home";
+    font-size: 0.9375rem;
+}
+
+/* =========================
+   Cards
+   ========================= */
+
+/* Remove background and blur from card overlay buttons */
+.card :is(.cardOverlayButton, .cardOverlayButtonIcon, .cardOverlayFab-primary, .paper-icon-button-light, .MuiIconButton-root),
+.card :is(.cardOverlayButton, .cardOverlayButtonIcon, .cardOverlayFab-primary, .paper-icon-button-light, .MuiIconButton-root):hover {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+/* Bottom-right card buttons grow 1.2x on hover */
+.card .cardOverlayButton-br :is(button, .MuiIconButton-root):hover {
+    transform: scale(1.2);
+}
+
+/* Keep the play button itself unscaled so its hitbox stays small */
+.card .cardOverlayFab-primary,
+.card .cardOverlayFab-primary:hover {
+    transform: none;
+}
+
+/* Play icon is 2x at rest */
+.card .cardOverlayFab-primary > :not(.MuiTouchRipple-root) {
+    transform: scale(2);
+}
+
+/* Play icon grows 1.2x on hover (2 * 1.2) */
+.card .cardOverlayFab-primary:hover > :not(.MuiTouchRipple-root) {
+    transform: scale(2.4);
+}
+
+/* Ease back on de-hover */
+.card .cardOverlayFab-primary > :not(.MuiTouchRipple-root),
+.card .cardOverlayButton-br :is(button, .MuiIconButton-root) {
+    transition: transform 0.37s var(--abyss-ease) !important;
+}
+
+/* Grow instantly on hover */
+.card .cardOverlayFab-primary:hover > :not(.MuiTouchRipple-root),
+.card .cardOverlayButton-br :is(button, .MuiIconButton-root):hover {
+    transition: none !important;
+}
+
+/* No underline on card text links */
+.card .textActionButton {
+    text-decoration: none !important;
+}
+
+/* Show the poster outline when hovering anywhere on the card, not only the buttons */
+.card:hover .cardOverlayContainer {
+    border: solid 1px rgba(245, 245, 247, 0.2) !important;
+}
+
+/* Remove the tint from the overlay layer, which covers the progress bar */
+.card .cardOverlayContainer {
+    background: transparent !important;
+}
+
+/* Own stacking context and clip, so the hover layer stays under the buttons and inside the poster */
+.card .cardScalable > .cardImageContainer {
+    isolation: isolate;
+    overflow: hidden;
+}
+
+/* Hover tint over the poster (the only layer for posters without an image) */
+.card .cardScalable > .cardImageContainer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.37s var(--abyss-ease);
+}
+
+/* With an image: two blurred, darkened copies (brightness 0.3 = 70% tint) */
+.card .cardScalable > .cardImageContainer[style*="background-image"]::before,
+.card .cardScalable > .cardImageContainer[style*="background-image"]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(8px) brightness(0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.37s var(--abyss-ease);
+}
+
+/* Bottom copy overhangs the poster, so the edges stay fully blurred (only its edges show) */
+.card .cardScalable > .cardImageContainer[style*="background-image"]::before {
+    inset: -32px;
+    z-index: 1;
+}
+
+/* Top copy is exact size, so the visible image doesn't zoom */
+.card .cardScalable > .cardImageContainer[style*="background-image"]::after {
+    z-index: 2;
+}
+
+/* Show both layers when hovering anywhere on the card */
+.card:hover:has(.cardOverlayContainer) .cardScalable > .cardImageContainer::before,
+.card:hover:has(.cardOverlayContainer) .cardScalable > .cardImageContainer::after {
+    opacity: 1;
+}
+
+/* Everything inside the poster (progress bar, count and watched indicators) above the hover layers */
+.card .cardScalable > .cardImageContainer > * {
+    z-index: 3;
+}
+
+/* Progress bar fades with the same timing as the blur */
+.card .cardScalable > .cardImageContainer > .innerCardFooter {
+    transition: opacity 0.37s var(--abyss-ease);
+}
+
+/* Hide the progress bar while the blur is shown */
+.card:hover:has(.cardOverlayContainer) .cardScalable > .cardImageContainer > .innerCardFooter {
+    opacity: 0;
+}
+
+/* Progress bar flush with the bottom and both sides of the poster */
+.card .innerCardFooter {
+    margin: 0 !important;
+    padding: 0 !important;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0 !important;
+}
+
+/* Square ends on the bar and its fill */
+.card .innerCardFooter .itemProgressBar,
+.card .innerCardFooter .itemProgressBarForeground {
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Half height (Abyss default is 7px) */
+.card .innerCardFooter .itemProgressBar {
+    height: 3.5px !important;
+}
+
+/* Same white as Jellyfin's card buttons */
+.card {
+    --card-white: rgba(255, 255, 255, 0.76);
+}
+
+/* Progress fill in that white; #indexPage lifts it above Abyss' own rule */
+:is(#indexPage, .card) .innerCardFooter .itemProgressBarForeground {
+    background-color: var(--card-white) !important;
+}
+
+/* Episode count and watched badges, top right and bottom right */
+.card :is(.playedIndicator, .countIndicator),
+.card .playstatebutton-icon-played::before {
+    background: var(--card-white);
+}
+
+/* =========================
+   Loader
+   ========================= */
+
+/* Plain white spinner (Abyss cycles white, grey and black) */
+.mdl-spinner__layer-1,
+.mdl-spinner__layer-2,
+.mdl-spinner__layer-3,
+.mdl-spinner__layer-4 {
+    border-color: #fff !important;
+}
+
+/* 0.3x the original size (Jellyfin default is 10vh) */
+.docspinner {
+    width: 3vh;
+    height: 3vh;
+    margin-top: -1.5vh;
+    margin-left: -1.5vh;
+}
+
+/* Thicker stroke, about 3x the scaled-down line (Jellyfin default is 0.21em) */
+.docspinner .mdl-spinner__circle {
+    border-width: 0.19em;
+}
+
 /* =========================
    Player
    ========================= */
+
+/* Hide the top bar on the playback loading screen (video exists, player page not shown yet) */
+body:has(.videoPlayerContainer):not(:has(#videoOsdPage:not(.hide))) :is(header.MuiAppBar-root, .skinHeader) {
+    display: none !important;
+}
+
+/* Hide the "Fetching additional data" status line */
+#videoOsdPage .osdMediaStatus,
+#videoOsdPage .videoOsdBottom div:has(> .material-icons.sync) {
+    display: none !important;
+}
+
+/* Hide the number bubble above the volume slider */
+:is(.osdVolumeSliderContainer, .nowPlayingBarVolumeSliderContainer) .sliderBubble,
+.sliderContainer:has(.osdVolumeSlider, .nowPlayingBarVolumeSlider) .sliderBubble {
+    display: none !important;
+}
 
 /* Hide chapter markers */
 #videoOsdPage .videoOsdBottom .sliderMarkerContainer {
