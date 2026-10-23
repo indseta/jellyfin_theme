@@ -403,6 +403,20 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
 }
 
 /* =========================
+   Detail page
+   ========================= */
+
+/* No dark band behind the title, info and buttons; the normal page background shows instead */
+#itemDetailPage .detailRibbon {
+    background: transparent !important;
+}
+
+/* Hide the Rotten Tomatoes score, keep the star rating */
+.mediaInfoCriticRating {
+    display: none !important;
+}
+
+/* =========================
    Loader
    ========================= */
 
