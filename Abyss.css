@@ -15,7 +15,7 @@
     .MuiDrawer-paper, .MuiListItemButton-root, .mainDrawer, .editPageSidebar, .navMenuOption,
     .MuiMenu-paper, .MuiMenu-paper .MuiButtonBase-root,
     .dialog, .dialog-fullscreen, .toast, .appfooter, .pageTitle,
-    .videoOsdBottom, .videoOsdBottom .osdControls, .iconOsd, .upNextContainer, .playerStats, .playerStats-stats,
+    .iconOsd, .upNextContainer, .playerStats, .playerStats-stats,
     .nowPlayingBar, .nowPlayingBar .nowPlayingImage,
     .detailImageContainer .card, .detailImageContainer .cardImageContainer,
     .emby-select, .checkboxOutline, #inputTextColor,
@@ -270,6 +270,36 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
     filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='b' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='8'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3C/svg%3E#b");
 }
 
+/* Library play button: hide Jellyfin's sharp SVG icon... */
+.card .cardOverlayFab-primary > svg[data-testid="PlayArrowIcon"] {
+    display: none;
+}
+
+/* ...and draw the rounded font icon from the home page instead, at the same size and 2x scale */
+.card .cardOverlayFab-primary:has(> svg[data-testid="PlayArrowIcon"])::before {
+    content: "play_arrow";
+    display: block;
+    font-family: "Material Icons Round" !important;
+    font-size: 1.66956521739130434em;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    transform: scale(2);
+    transition: transform 0.37s var(--abyss-ease);
+}
+
+/* Same instant 1.2x grow on hover as the home play button */
+.card .cardOverlayFab-primary:hover:has(> svg[data-testid="PlayArrowIcon"])::before {
+    transform: scale(2.4);
+    transition: none;
+}
+
 /* =========================
    Episode lists
    ========================= */
@@ -403,6 +433,27 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
 
 /* Hide the top bar on the playback loading screen (video exists, player page not shown yet) */
 body:has(.videoPlayerContainer):not(:has(#videoOsdPage:not(.hide))) :is(header.MuiAppBar-root, .skinHeader) {
+    display: none !important;
+}
+
+/* No blur behind the title in the player header */
+body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.MuiAppBar-root .MuiTypography-root, .pageTitle) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* Control bar flush with the bottom and both sides, square corners */
+#videoOsdPage .videoOsdBottom {
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+#videoOsdPage .videoOsdBottom .osdControls {
+    border-radius: 0 !important;
+}
+
+/* Hide the favorite button */
+#videoOsdPage .videoOsdBottom :is(.btnUserRating, button[is="emby-ratingbutton"]) {
     display: none !important;
 }
 
