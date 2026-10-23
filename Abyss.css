@@ -417,6 +417,40 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
 }
 
 /* =========================
+   Dropdowns
+   ========================= */
+
+/* Native dropdown lists open in dark mode (Firefox and Chrome on Windows) */
+select {
+    color-scheme: dark;
+}
+
+/* Firefox fills the open list with the dropdown's background color, so that color is solid black */
+/* The button's lighter fill is drawn as an image on top, which the list ignores */
+select.emby-select-withcolor {
+    background-color: #0a0a0a !important;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12)) !important;
+}
+
+/* No brighter border while the dropdown is focused or open */
+select.emby-select-withcolor:focus {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* No brighter label while its dropdown is focused or open */
+.selectContainer .selectLabelFocused {
+    color: inherit !important;
+}
+
+/* Options in the same black, so the list is one flat surface */
+/* Grey text matches the button in Chromium-based apps; Firefox on Windows keeps its own white */
+select option {
+    background-color: #0a0a0a !important;
+    color: rgb(190, 190, 190) !important;
+    border-radius: 0 !important;
+}
+
+/* =========================
    Loader
    ========================= */
 
