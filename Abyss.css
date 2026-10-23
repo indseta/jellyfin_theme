@@ -158,8 +158,8 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
 }
 
 /* With an image: two blurred, darkened copies (brightness 0.3 = 70% tint) */
-.card .cardScalable > .cardImageContainer[style*="background-image"]::before,
-.card .cardScalable > .cardImageContainer[style*="background-image"]::after {
+.card .cardScalable > .cardImageContainer[style*="url("]::before,
+.card .cardScalable > .cardImageContainer[style*="url("]::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -171,13 +171,13 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
 }
 
 /* Bottom copy overhangs the poster, so the edges stay fully blurred (only its edges show) */
-.card .cardScalable > .cardImageContainer[style*="background-image"]::before {
+.card .cardScalable > .cardImageContainer[style*="url("]::before {
     inset: -32px;
     z-index: 1;
 }
 
 /* Top copy is exact size, so the visible image doesn't zoom */
-.card .cardScalable > .cardImageContainer[style*="background-image"]::after {
+.card .cardScalable > .cardImageContainer[style*="url("]::after {
     z-index: 2;
 }
 
@@ -193,12 +193,12 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
 }
 
 /* Progress bar fades with the same timing as the blur */
-.card .cardScalable > .cardImageContainer > .innerCardFooter {
+.card .cardImageContainer > .innerCardFooter {
     transition: opacity 0.37s var(--abyss-ease);
 }
 
 /* Hide the progress bar while the blur is shown */
-.card:hover:has(.cardOverlayContainer) .cardScalable > .cardImageContainer > .innerCardFooter {
+.card:hover:has(.cardOverlayContainer) .cardImageContainer > .innerCardFooter {
     opacity: 0;
 }
 
@@ -224,8 +224,8 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
     height: 3.5px !important;
 }
 
-/* Same white as Jellyfin's card buttons */
-.card {
+/* Same white as Jellyfin's card buttons, shared by cards and episode lists */
+:root {
     --card-white: rgba(255, 255, 255, 0.76);
 }
 
@@ -234,10 +234,142 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
     background-color: var(--card-white) !important;
 }
 
-/* Episode count and watched badges, top right and bottom right */
+/* Episode count and watched badges, top right and bottom right (both card layouts) */
 .card :is(.playedIndicator, .countIndicator),
-.card .playstatebutton-icon-played::before {
+.card .playstatebutton-icon-played::before,
+.card .cardOverlayButton-br button[title="Watched"] .MuiSvgIcon-root[data-testid="CheckIcon"] {
     background: var(--card-white);
+}
+
+/* Library posters use Jellyfin's newer card layout, with a real <img> instead of a background */
+
+/* Tint over the image */
+.card .cardContent > .cardImageContainer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.37s var(--abyss-ease);
+}
+
+.card:hover:has(.cardOverlayContainer) .cardContent > .cardImageContainer::after {
+    opacity: 1;
+}
+
+/* Indicators and progress bar above the tint */
+.card .cardContent > .cardImageContainer > :not(:has(> img)) {
+    z-index: 2;
+}
+
+/* Blur the image itself; the SVG filter rescales the faded edges back to full strength so they don't go dark */
+/* Works in Firefox; Chromium-based apps ignore it and show the tint alone */
+.card:hover:has(.cardOverlayContainer) .cardContent > .cardImageContainer img {
+    filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='b' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='8'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3C/svg%3E#b");
+}
+
+/* =========================
+   Episode lists
+   ========================= */
+
+/* Thumbnail clips its hover layers */
+.listItemImage[style*="url("] {
+    isolation: isolate;
+    overflow: hidden;
+}
+
+/* Two blurred, darkened copies of the thumbnail, same technique as the home posters */
+.listItemImage[style*="url("]::before,
+.listItemImage[style*="url("]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(8px) brightness(0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.37s var(--abyss-ease);
+}
+
+/* Bottom copy overhangs the edges, top copy is exact size */
+.listItemImage[style*="url("]::before {
+    inset: -32px;
+    z-index: 1;
+}
+
+.listItemImage[style*="url("]::after {
+    z-index: 2;
+}
+
+/* Blur when hovering anywhere on the row */
+.listItem:hover .listItemImage::before,
+.listItem:hover .listItemImage::after {
+    opacity: 1;
+}
+
+/* Indicators, play button and progress bar above the blur */
+.listItemImage > * {
+    z-index: 3;
+}
+
+/* Watched and count badges in the same white */
+.listItem .listItemImage :is(.playedIndicator, .countIndicator) {
+    background: var(--card-white);
+}
+
+/* Play button like the poster one: no background, the icon grows instead of the button */
+.listItemImage .listItemImageButton,
+.listItemImage .listItemImageButton:hover {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    transform: none !important;
+}
+
+/* White play icon at 2x, eases back on de-hover */
+.listItem .listItemImage .listItemImageButton-icon {
+    color: var(--card-white) !important;
+    transform: scale(2);
+    transition: transform 0.37s var(--abyss-ease) !important;
+}
+
+/* Grows 1.2x instantly on hover */
+.listItem .listItemImage .listItemImageButton:hover .listItemImageButton-icon {
+    color: rgb(var(--abyss-accent)) !important;
+    transform: scale(2.4);
+    transition: none !important;
+}
+
+/* Play button only shows on hover, like on posters (touch screens keep it visible) */
+@media (hover: hover) {
+    .listItemImage .listItemImageButton {
+        opacity: 0;
+        transition: opacity 0.37s var(--abyss-ease);
+    }
+
+    .listItem:hover .listItemImage .listItemImageButton {
+        opacity: 1;
+    }
+}
+
+/* Progress bar flush with the bottom, half height, fades out with the blur */
+.listItemImage .listItemProgressBar {
+    margin: 0 !important;
+    height: 3.5px !important;
+    border-radius: 0 !important;
+    transition: opacity 0.37s var(--abyss-ease);
+}
+
+.listItem:hover .listItemImage .listItemProgressBar {
+    opacity: 0;
+}
+
+/* Square, translucent fill; #itemDetailPage lifts it above Abyss' own rule */
+:is(#itemDetailPage, .listItemImage) .listItemProgressBar .itemProgressBarForeground {
+    background-color: var(--card-white) !important;
+    border-radius: 0 !important;
 }
 
 /* =========================
