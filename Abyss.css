@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block");
 
 /* =========================
    Corner radius
@@ -28,6 +29,64 @@
 ) {
     border-radius: 5px !important;
 }
+
+/* =========================
+   Icons
+   ========================= */
+
+/* Material Symbols Rounded (outlined) for every font icon */
+/* Play icons and the player's play/pause keep Abyss' filled round style */
+:root :is(.material-icons, [class*="material-icons"]):not(.play_arrow, #videoOsdPage .btnPause *) {
+    font-family: "Material Symbols Rounded" !important;
+    font-weight: normal;
+}
+
+/* Filled where the fill means something: favorited hearts and star ratings */
+:root :is(.ratingbutton-icon-withrating, .starIcon) {
+    font-variation-settings: "FILL" 1;
+}
+
+/* MUI's SVG icons (newer parts of Jellyfin) redrawn in the same set: the original drawing is hidden and the new shape is masked in */
+/* Red icons (watched and favorited states) keep their original filled look */
+.MuiSvgIcon-root:is(
+    [data-testid="AccountCircleIcon"], [data-testid="ArrowBackIcon"], [data-testid="CastIcon"], [data-testid="CheckIcon"],
+    [data-testid="CloseIcon"], [data-testid="DashboardIcon"], [data-testid="EditIcon"], [data-testid="FavoriteIcon"],
+    [data-testid="GroupAddIcon"], [data-testid="GroupsIcon"], [data-testid="HomeIcon"], [data-testid="LogoutIcon"],
+    [data-testid="MenuIcon"], [data-testid="MoreVertIcon"], [data-testid="MovieIcon"], [data-testid="PhonelinkLockIcon"],
+    [data-testid="SearchIcon"], [data-testid="SettingsIcon"], [data-testid="SettingsRemoteIcon"], [data-testid="TvIcon"],
+    [data-testid="WarningIcon"]
+):not(.MuiSvgIcon-colorError) {
+    --symbol-paths: 0;
+    background-color: currentColor;
+    -webkit-mask: var(--symbol) center / contain no-repeat;
+    mask: var(--symbol) center / contain no-repeat;
+}
+
+.MuiSvgIcon-root > * {
+    opacity: var(--symbol-paths, 1);
+}
+
+[data-testid="AccountCircleIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/account_circle.svg"); }
+[data-testid="ArrowBackIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/arrow_back.svg"); }
+[data-testid="CastIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/cast.svg"); }
+[data-testid="CheckIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/check.svg"); }
+[data-testid="CloseIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/close.svg"); }
+[data-testid="DashboardIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/dashboard.svg"); }
+[data-testid="EditIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/edit.svg"); }
+[data-testid="FavoriteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/favorite.svg"); }
+[data-testid="GroupAddIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/group_add.svg"); }
+[data-testid="GroupsIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/groups.svg"); }
+[data-testid="HomeIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/home.svg"); }
+[data-testid="LogoutIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/logout.svg"); }
+[data-testid="MenuIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/menu.svg"); }
+[data-testid="MoreVertIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/more_vert.svg"); }
+[data-testid="MovieIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/movie.svg"); }
+[data-testid="PhonelinkLockIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/phonelink_lock.svg"); }
+[data-testid="SearchIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/search.svg"); }
+[data-testid="SettingsIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/settings.svg"); }
+[data-testid="SettingsRemoteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/settings_remote.svg"); }
+[data-testid="TvIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/tv.svg"); }
+[data-testid="WarningIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/warning.svg"); }
 
 /* =========================
    Header
@@ -76,6 +135,22 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) > :not(.
 header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
     content: "Home";
     font-size: 0.9375rem;
+}
+
+/* Swap the Jellyfin logo for an outlined home icon from the same set as the other nav icons */
+header.MuiAppBar-root .MuiButton-root img[src*="icon-transparent"] {
+    display: none !important;
+}
+
+header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) .MuiButton-startIcon::before {
+    content: "home";
+    display: block;
+    font-family: "Material Symbols Rounded";
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
 }
 
 /* =========================
@@ -515,6 +590,81 @@ body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.M
 :is(.osdVolumeSliderContainer, .nowPlayingBarVolumeSliderContainer) .sliderBubble,
 .sliderContainer:has(.osdVolumeSlider, .nowPlayingBarVolumeSlider) .sliderBubble {
     display: none !important;
+}
+
+/* Skip buttons (intro, outro, recap, preview, commercial) styled like the profile menu: dark glass panel with white text */
+.skip-button {
+    gap: 1em;
+    padding: 12px 16px !important;
+    background: rgba(var(--abyss-glass-tint), 0.72) !important;
+    color: rgb(var(--abyss-accent)) !important;
+    border: 1px solid rgba(var(--abyss-accent), 0.16) !important;
+    border-radius: var(--abyss-radius) !important;
+    box-shadow: 0 8px 36px rgba(0, 0, 0, 0.32) !important;
+    text-shadow: none !important;
+    -webkit-backdrop-filter: blur(var(--abyss-glass-blur)) !important;
+    backdrop-filter: blur(var(--abyss-glass-blur)) !important;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: background-color 0.25s var(--abyss-ease), color 0.25s var(--abyss-ease), opacity 0.2s ease-out !important;
+}
+
+/* White with dark text on hover, like a hovered menu item */
+.skip-button:hover {
+    background: rgb(var(--abyss-accent)) !important;
+    color: #121212 !important;
+}
+
+/* Icon on the left of the text, like the menu items */
+.skip-button .material-icons {
+    order: -1;
+    margin: 0 !important;
+    color: inherit !important;
+}
+
+/* Player buttons (controls and top bar) styled like the poster buttons: soft white icon, no background, eases back on de-hover */
+:is(#videoOsdPage .videoOsdBottom .paper-icon-button-light, .videoOsd-appBar .MuiIconButton-root) {
+    color: var(--card-white) !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    transition: transform 0.37s var(--abyss-ease) !important;
+}
+
+/* Turns white and grows 1.2x instantly on hover */
+:is(#videoOsdPage .videoOsdBottom .paper-icon-button-light, .videoOsd-appBar .MuiIconButton-root):hover:not(:disabled) {
+    color: rgb(var(--abyss-accent)) !important;
+    transform: scale(1.2);
+    transition: none !important;
+}
+
+/* Play/pause like the poster play button: the button itself stays put, so its hitbox doesn't grow */
+#videoOsdPage .videoOsdBottom .btnPause,
+#videoOsdPage .videoOsdBottom .btnPause:hover:not(:disabled) {
+    transform: none;
+}
+
+/* Icon at 1.8x, eases back on de-hover */
+#videoOsdPage .videoOsdBottom .btnPause > .material-icons {
+    transform: scale(1.8);
+    transition: transform 0.37s var(--abyss-ease) !important;
+}
+
+/* Icon grows 1.2x more (1.8 * 1.2) instantly on hover */
+#videoOsdPage .videoOsdBottom .btnPause:hover:not(:disabled) > .material-icons {
+    transform: scale(2.16);
+    transition: none !important;
+}
+
+/* The pause icon is drawn larger than the play icon, so it gets a smaller scale to look the same size */
+#videoOsdPage .videoOsdBottom .btnPause > .material-icons.pause {
+    transform: scale(1.55);
+}
+
+/* Same 1.2x grow on hover (1.55 * 1.2) */
+#videoOsdPage .videoOsdBottom .btnPause:hover:not(:disabled) > .material-icons.pause {
+    transform: scale(1.86);
 }
 
 /* Hide chapter markers */
