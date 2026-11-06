@@ -936,16 +936,16 @@ body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.M
     filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.4));
 }
 
-/* Control bar: flush with the bottom and both sides, square corners, blurred black glass.
-   One blur on the bar itself: Abyss also blurs the controls inside it, and a blur inside a blur shows nothing.
-   Jellyfin's will-change hint is turned off because it can stop the blur from showing in Firefox */
+/* Control bar: no box, just a soft shadow rising from the bottom edge, the same one as behind the top bar
+   (Jellyfin's own gradient, which Abyss swaps for a glass box). It reaches 2em above the controls so it fades out
+   above the seek bar, like the top one fades out below the title. That strip lets clicks through to the video */
 #videoOsdPage .videoOsdBottom {
     margin: 0 !important;
     border-radius: 0 !important;
-    will-change: auto !important;
-    background: rgba(0, 0, 0, 0.5) !important; /* Abyss' black; raise 0.5 for a darker bar */
-    -webkit-backdrop-filter: blur(var(--abyss-glass-blur)) !important;
-    backdrop-filter: blur(var(--abyss-glass-blur)) !important;
+    padding-top: 2em !important; /* how far the shadow reaches above the controls */
+    background: linear-gradient(0deg, rgba(16, 16, 16, 0.75) 0%, rgba(16, 16, 16, 0) 100%) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
 }
 
 #videoOsdPage .videoOsdBottom .osdControls {
