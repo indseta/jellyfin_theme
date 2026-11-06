@@ -565,14 +565,103 @@ body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.M
     backdrop-filter: none !important;
 }
 
-/* Control bar flush with the bottom and both sides, square corners */
+/* Player text behaves like interface: normal arrow cursor, can't be highlighted */
+body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.MuiAppBar-root .MuiTypography-root, .pageTitle),
+#videoOsdPage :is(.osdTextContainer, .endsAtText) {
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Player title as the show's or movie's logo (set by jellyfin-title-logo.js; plain text when there's no logo).
+   Hidden while the logo is looked up, then fades in once. Showing/hiding the controls doesn't replay the fade */
+.videoOsd-appBar > p.MuiTypography-root {
+    transition: opacity 0.125s ease-out;
+}
+
+.videoOsd-appBar > p.MuiTypography-root[data-title-logo="loading"] {
+    opacity: 0;
+    transition: none;
+}
+
+.videoOsd-appBar > p.MuiTypography-root[data-title-logo="ready"] {
+    --title-logo-height: 18px; /* height of the logo itself, empty space around it trimmed off */
+    /* Only smaller if the logo would be wider than half the screen (phones) */
+    --title-logo-h: min(var(--title-logo-height), calc(50vw / var(--title-logo-ratio)));
+    box-sizing: content-box;
+    flex: none;
+    height: var(--title-logo-h);
+    width: calc(var(--title-logo-h) * var(--title-logo-ratio));
+    /* Shows only the visible part of the image, measured by the script.
+       content-box: starts where the text title started, inside Abyss' padding */
+    background-image: var(--title-logo);
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-clip: content-box;
+    background-size: calc(var(--title-logo-h) * var(--title-logo-image-w)) calc(var(--title-logo-h) * var(--title-logo-image-h));
+    background-position: calc(var(--title-logo-h) * var(--title-logo-x) * -1) calc(var(--title-logo-h) * var(--title-logo-y) * -1);
+    color: transparent;
+    font-size: 0;
+    filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* Control bar flush with the bottom and both sides, square corners.
+   The blur and tint sit on a layer behind the controls that fades into the video at the top,
+   instead of on the bar itself (a fade on the bar would also cut off the seek preview) */
 #videoOsdPage .videoOsdBottom {
+    --osd-fade: 3.5em; /* height of the fade above the bar */
     margin: 0 !important;
     border-radius: 0 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    /* The bar must stay fully opaque or the blur layer can't see the video, so its contents fade instead.
+       The visibility transition keeps Jellyfin's "hide once faded out" step working */
+    will-change: auto !important;
+    opacity: 1 !important;
+    transition: visibility 0.3s ease-out !important;
 }
 
 #videoOsdPage .videoOsdBottom .osdControls {
     border-radius: 0 !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+#videoOsdPage .videoOsdBottom::before {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--osd-fade)) 0 0;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(var(--abyss-glass-tint), 0.69);
+    -webkit-backdrop-filter: blur(var(--abyss-glass-blur));
+    backdrop-filter: blur(var(--abyss-glass-blur));
+    /* Eased fade: transparent at the top, full strength where the bar starts */
+    --osd-fade-mask: linear-gradient(to bottom,
+        transparent,
+        rgba(0, 0, 0, 0.16) calc(var(--osd-fade) * 0.25),
+        rgba(0, 0, 0, 0.5) calc(var(--osd-fade) * 0.5),
+        rgba(0, 0, 0, 0.84) calc(var(--osd-fade) * 0.75),
+        #000 var(--osd-fade));
+    -webkit-mask: var(--osd-fade-mask);
+    mask: var(--osd-fade-mask);
+}
+
+/* Show/hide fade, same timing as Jellyfin's */
+#videoOsdPage .videoOsdBottom > *,
+#videoOsdPage .videoOsdBottom::before {
+    transition: opacity 0.3s ease-out;
+}
+
+#videoOsdPage .videoOsdBottom-hidden {
+    visibility: hidden;
+}
+
+#videoOsdPage .videoOsdBottom-hidden > *,
+#videoOsdPage .videoOsdBottom-hidden::before {
+    opacity: 0;
 }
 
 /* Hide the favorite button */
