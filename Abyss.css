@@ -1,5 +1,6 @@
 @import url("https://cdn.jsdelivr.net/gh/AumGupta/abyss-jellyfin@main/abyss.css");
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block");
+@import url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/css/framework7-icons.css");
 
 /* =========================
    Corner radius
@@ -34,59 +35,249 @@
    Icons
    ========================= */
 
-/* Material Symbols Rounded (outlined) for every font icon */
-/* Play icons and the player's play/pause keep Abyss' filled round style */
+/* Apple-style icons: Framework7, made to look like Apple's SF Symbols (Apple's own can't be used on websites).
+   Every icon Jellyfin uses is drawn with its closest match; anything without one keeps the rounded Google style below.
+   Play/pause keep Abyss' filled round style */
+
+/* Fallback for icons without a match: Material Symbols Rounded */
 :root :is(.material-icons, [class*="material-icons"]):not(.play_arrow, #videoOsdPage .btnPause *) {
     font-family: "Material Symbols Rounded" !important;
     font-weight: normal;
 }
 
+/* Jellyfin's font icons: same spot, Framework7's icon font instead (drawn by name, scaled to match the old size) */
+:root .material-icons:is(
+    .home, .search, .settings, .favorite, .check, .close, .clear, .cancel,
+    .arrow_back, .arrow_forward, .chevron_left, .chevron_right, .keyboard_arrow_left, .keyboard_arrow_right, .keyboard_arrow_down, .keyboard_arrow_up,
+    .arrow_upward, .add, .add_circle, .more_vert, .menu, .filter_alt, .sort_by_alpha, .view_comfy,
+    .shuffle, .repeat, .repeat_one, .skip_next, .skip_previous, .fast_forward, .fast_rewind, .forward_30,
+    .replay_10, .stop, .volume_up, .volume_off, .fullscreen, .fullscreen_exit, .picture_in_picture_alt, .closed_caption,
+    .subtitles, .audiotrack, .music_note, .queue_music, .album, .lyrics, .cast, .airplay,
+    .live_tv, .dvr, .fiber_manual_record, .fiber_smart_record, .movie, .local_movies, .photo, .image,
+    .slideshow, .folder, .folder_open, .storage, .file_download, .cloud_download, .delete, .mode_edit,
+    .edit, .info, .info_outline, .person, .groups, .lock, .exit_to_app, .dashboard,
+    .content_copy, .playlist_add, .playlist_remove, .remove_circle, .remove_circle_outline, .undo, .redo, .timer,
+    .brightness_high, .book, .autorenew, .refresh, .keyboard_return, .backspace, .save, .explore,
+    .share, .check_box, .check_box_outline_blank, .vertical_align_top, .vertical_align_bottom, .video_settings, .star, .preview,
+    .replay, .theaters, .get_app
+)::before {
+    /* Fills exactly the icon's 1em line from the top, so it centres on Framework7's own font measurements
+       instead of sitting on the Google font's text baseline (which put it a few pixels low) */
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1;
+    font-family: "Framework7 Icons" !important;
+    font-weight: normal;
+    -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+    transform: scale(0.9);
+}
+
+:root .material-icons.home::before { content: "house"; }
+:root .material-icons.search::before { content: "search"; }
+:root .material-icons.settings::before { content: "gear_alt"; }
+:root .material-icons.favorite::before { content: "heart"; }
+:root .material-icons.check::before { content: "checkmark"; }
+:root .material-icons.close::before { content: "xmark"; }
+:root .material-icons.clear::before { content: "xmark"; }
+:root .material-icons.cancel::before { content: "xmark_circle"; }
+:root .material-icons.arrow_back::before { content: "chevron_left"; }
+:root .material-icons.arrow_forward::before { content: "chevron_right"; }
+:root .material-icons.chevron_left::before { content: "chevron_left"; }
+:root .material-icons.chevron_right::before { content: "chevron_right"; }
+:root .material-icons.keyboard_arrow_left::before { content: "chevron_left"; }
+:root .material-icons.keyboard_arrow_right::before { content: "chevron_right"; }
+:root .material-icons.keyboard_arrow_down::before { content: "chevron_down"; }
+:root .material-icons.keyboard_arrow_up::before { content: "chevron_up"; }
+:root .material-icons.arrow_upward::before { content: "arrow_up"; }
+:root .material-icons.add::before { content: "plus"; }
+:root .material-icons.add_circle::before { content: "plus_circle"; }
+:root .material-icons.more_vert::before { content: "ellipsis_vertical"; }
+:root .material-icons.menu::before { content: "bars"; }
+:root .material-icons.filter_alt::before { content: "line_horizontal_3_decrease"; }
+:root .material-icons.sort_by_alpha::before { content: "arrow_up_arrow_down"; }
+:root .material-icons.view_comfy::before { content: "square_grid_2x2"; }
+:root .material-icons.shuffle::before { content: "shuffle"; }
+:root .material-icons.repeat::before { content: "repeat"; }
+:root .material-icons.repeat_one::before { content: "repeat_1"; }
+:root .material-icons.skip_next::before { content: "forward_end"; }
+:root .material-icons.skip_previous::before { content: "backward_end"; }
+:root .material-icons.fast_forward::before { content: "forward"; }
+:root .material-icons.fast_rewind::before { content: "backward"; }
+:root .material-icons.forward_30::before { content: "goforward_30"; }
+:root .material-icons.replay_10::before { content: "gobackward_10"; }
+:root .material-icons.stop::before { content: "stop"; }
+:root .material-icons.volume_up::before { content: "speaker_3"; }
+:root .material-icons.volume_off::before { content: "speaker_slash"; }
+:root .material-icons.fullscreen::before { content: "arrow_up_left_arrow_down_right"; }
+:root .material-icons.fullscreen_exit::before { content: "arrow_down_right_arrow_up_left"; }
+:root .material-icons.picture_in_picture_alt::before { content: "rectangle_on_rectangle"; }
+:root .material-icons.closed_caption::before { content: "captions_bubble"; }
+:root .material-icons.subtitles::before { content: "captions_bubble"; }
+:root .material-icons.audiotrack::before { content: "music_note"; }
+:root .material-icons.music_note::before { content: "music_note"; }
+:root .material-icons.queue_music::before { content: "music_note_list"; }
+:root .material-icons.album::before { content: "music_albums"; }
+:root .material-icons.lyrics::before { content: "quote_bubble"; }
+:root .material-icons.cast::before { content: "tv"; }
+:root .material-icons.airplay::before { content: "tv"; }
+:root .material-icons.live_tv::before { content: "tv"; }
+:root .material-icons.dvr::before { content: "recordingtape"; }
+:root .material-icons.fiber_manual_record::before { content: "circle_fill"; }
+:root .material-icons.fiber_smart_record::before { content: "smallcircle_circle"; }
+:root .material-icons.movie::before { content: "film"; }
+:root .material-icons.local_movies::before { content: "film"; }
+:root .material-icons.photo::before { content: "photo"; }
+:root .material-icons.image::before { content: "photo"; }
+:root .material-icons.slideshow::before { content: "play_rectangle"; }
+:root .material-icons.folder::before { content: "folder"; }
+:root .material-icons.folder_open::before { content: "folder"; }
+:root .material-icons.storage::before { content: "tray_2"; }
+:root .material-icons.file_download::before { content: "arrow_down_to_line"; }
+:root .material-icons.cloud_download::before { content: "cloud_download"; }
+:root .material-icons.delete::before { content: "trash"; }
+:root .material-icons.mode_edit::before { content: "pencil"; }
+:root .material-icons.edit::before { content: "pencil"; }
+:root .material-icons.info::before { content: "info_circle"; }
+:root .material-icons.info_outline::before { content: "info_circle"; }
+:root .material-icons.person::before { content: "person"; }
+:root .material-icons.groups::before { content: "person_3"; }
+:root .material-icons.lock::before { content: "lock"; }
+:root .material-icons.exit_to_app::before { content: "square_arrow_right"; }
+:root .material-icons.dashboard::before { content: "square_grid_2x2"; }
+:root .material-icons.content_copy::before { content: "doc_on_doc"; }
+:root .material-icons.playlist_add::before { content: "text_badge_plus"; }
+:root .material-icons.playlist_remove::before { content: "text_badge_minus"; }
+:root .material-icons.remove_circle::before { content: "minus_circle"; }
+:root .material-icons.remove_circle_outline::before { content: "minus_circle"; }
+:root .material-icons.undo::before { content: "arrow_uturn_left"; }
+:root .material-icons.redo::before { content: "arrow_uturn_right"; }
+:root .material-icons.timer::before { content: "timer"; }
+:root .material-icons.brightness_high::before { content: "sun_max"; }
+:root .material-icons.book::before { content: "book"; }
+:root .material-icons.autorenew::before { content: "arrow_clockwise"; }
+:root .material-icons.refresh::before { content: "arrow_clockwise"; }
+:root .material-icons.keyboard_return::before { content: "return"; }
+:root .material-icons.backspace::before { content: "delete_left"; }
+:root .material-icons.save::before { content: "floppy_disk"; }
+:root .material-icons.explore::before { content: "compass"; }
+:root .material-icons.share::before { content: "square_arrow_up"; }
+:root .material-icons.check_box::before { content: "checkmark_square"; }
+:root .material-icons.check_box_outline_blank::before { content: "square"; }
+:root .material-icons.vertical_align_top::before { content: "arrow_up_to_line"; }
+:root .material-icons.vertical_align_bottom::before { content: "arrow_down_to_line"; }
+:root .material-icons.video_settings::before { content: "slider_horizontal_3"; }
+:root .material-icons.star::before { content: "star"; }
+:root .material-icons.preview::before { content: "eye"; }
+:root .material-icons.replay::before { content: "arrow_counterclockwise"; }
+:root .material-icons.theaters::before { content: "film"; }
+:root .material-icons.get_app::before { content: "arrow_down_to_line"; }
+
 /* Filled where the fill means something: favorited hearts and star ratings */
-:root :is(.ratingbutton-icon-withrating, .starIcon) {
-    font-variation-settings: "FILL" 1;
+:root .material-icons.favorite.ratingbutton-icon-withrating::before { content: "heart_fill"; }
+:root .material-icons.starIcon::before { content: "star_fill"; }
+
+/* Watched button: a check in a circle, outlined when unwatched and filled when watched (like Apple TV),
+   instead of Abyss' box behind the check */
+:root .material-icons.playstatebutton-icon-unplayed::before { content: "checkmark_circle"; }
+
+:root .material-icons.playstatebutton-icon-played::before {
+    content: "checkmark_circle_fill";
+    background: none !important;
+    color: inherit !important;
 }
 
 /* MUI's SVG icons (newer parts of Jellyfin) redrawn in the same set: the original drawing is hidden and the new shape is masked in */
 /* Red icons (watched and favorited states) keep their original filled look */
 .MuiSvgIcon-root:is(
-    [data-testid="AccountCircleIcon"], [data-testid="ArrowBackIcon"], [data-testid="CastIcon"], [data-testid="CheckIcon"],
-    [data-testid="CloseIcon"], [data-testid="DashboardIcon"], [data-testid="EditIcon"], [data-testid="FavoriteIcon"],
-    [data-testid="GroupAddIcon"], [data-testid="GroupsIcon"], [data-testid="HomeIcon"], [data-testid="LogoutIcon"],
-    [data-testid="MenuIcon"], [data-testid="MoreVertIcon"], [data-testid="MovieIcon"], [data-testid="PhonelinkLockIcon"],
-    [data-testid="SearchIcon"], [data-testid="SettingsIcon"], [data-testid="SettingsRemoteIcon"], [data-testid="TvIcon"],
+    [data-testid="AccountCircleIcon"], [data-testid="AddIcon"], [data-testid="AlbumIcon"], [data-testid="ArrowBackIcon"],
+    [data-testid="ArrowDownwardIcon"], [data-testid="ArrowUpwardIcon"], [data-testid="BookIcon"], [data-testid="CastIcon"],
+    [data-testid="CastConnectedIcon"], [data-testid="CheckIcon"], [data-testid="ChevronRightIcon"], [data-testid="CloseIcon"],
+    [data-testid="ClosedCaptionIcon"], [data-testid="ContentCopyIcon"], [data-testid="DashboardIcon"], [data-testid="DeleteIcon"],
+    [data-testid="DownloadIcon"], [data-testid="EditIcon"], [data-testid="ExpandLessIcon"], [data-testid="ExpandMoreIcon"],
+    [data-testid="ExploreIcon"], [data-testid="FavoriteIcon"], [data-testid="FileDownloadIcon"], [data-testid="FilterAltIcon"],
+    [data-testid="FolderIcon"], [data-testid="GroupAddIcon"], [data-testid="GroupsIcon"], [data-testid="HomeIcon"],
+    [data-testid="ImageIcon"], [data-testid="InfoIcon"], [data-testid="LiveTvIcon"], [data-testid="LogoutIcon"],
+    [data-testid="MenuIcon"], [data-testid="MoreVertIcon"], [data-testid="MovieIcon"], [data-testid="MusicNoteIcon"],
+    [data-testid="NavigateBeforeIcon"], [data-testid="NavigateNextIcon"], [data-testid="NotificationsIcon"], [data-testid="OpenInNewIcon"],
+    [data-testid="PeopleIcon"], [data-testid="PersonAddIcon"], [data-testid="PersonRemoveIcon"], [data-testid="PhonelinkLockIcon"],
+    [data-testid="PhotoIcon"], [data-testid="PlaylistAddIcon"], [data-testid="RefreshIcon"], [data-testid="ScheduleIcon"],
+    [data-testid="SearchIcon"], [data-testid="SettingsIcon"], [data-testid="SettingsRemoteIcon"], [data-testid="ShuffleIcon"],
+    [data-testid="SortByAlphaIcon"], [data-testid="StarIcon"], [data-testid="StopIcon"], [data-testid="TheatersIcon"],
+    [data-testid="TvIcon"], [data-testid="VideocamIcon"], [data-testid="VisibilityIcon"], [data-testid="VisibilityOffIcon"],
     [data-testid="WarningIcon"]
 ):not(.MuiSvgIcon-colorError) {
     --symbol-paths: 0;
     background-color: currentColor;
-    -webkit-mask: var(--symbol) center / contain no-repeat;
-    mask: var(--symbol) center / contain no-repeat;
+    -webkit-mask: var(--symbol) center / 90% no-repeat;
+    mask: var(--symbol) center / 90% no-repeat;
 }
 
 .MuiSvgIcon-root > * {
     opacity: var(--symbol-paths, 1);
 }
 
-[data-testid="AccountCircleIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/account_circle.svg"); }
-[data-testid="ArrowBackIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/arrow_back.svg"); }
-[data-testid="CastIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/cast.svg"); }
-[data-testid="CheckIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/check.svg"); }
-[data-testid="CloseIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/close.svg"); }
-[data-testid="DashboardIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/dashboard.svg"); }
-[data-testid="EditIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/edit.svg"); }
-[data-testid="FavoriteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/favorite.svg"); }
-[data-testid="GroupAddIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/group_add.svg"); }
-[data-testid="GroupsIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/groups.svg"); }
-[data-testid="HomeIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/home.svg"); }
-[data-testid="LogoutIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/logout.svg"); }
-[data-testid="MenuIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/menu.svg"); }
-[data-testid="MoreVertIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/more_vert.svg"); }
-[data-testid="MovieIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/movie.svg"); }
-[data-testid="PhonelinkLockIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/phonelink_lock.svg"); }
-[data-testid="SearchIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/search.svg"); }
-[data-testid="SettingsIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/settings.svg"); }
-[data-testid="SettingsRemoteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/settings_remote.svg"); }
-[data-testid="TvIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/tv.svg"); }
-[data-testid="WarningIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/@material-symbols/svg-400/rounded/warning.svg"); }
+[data-testid="AccountCircleIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/person_crop_circle.svg"); }
+[data-testid="AddIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/plus.svg"); }
+[data-testid="AlbumIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/music_albums.svg"); }
+[data-testid="ArrowBackIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/chevron_left.svg"); }
+[data-testid="ArrowDownwardIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/arrow_down.svg"); }
+[data-testid="ArrowUpwardIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/arrow_up.svg"); }
+[data-testid="BookIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/book.svg"); }
+[data-testid="CastIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/tv.svg"); }
+[data-testid="CastConnectedIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/tv.svg"); }
+[data-testid="CheckIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/checkmark.svg"); }
+[data-testid="ChevronRightIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/chevron_right.svg"); }
+[data-testid="CloseIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/xmark.svg"); }
+[data-testid="ClosedCaptionIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/captions_bubble.svg"); }
+[data-testid="ContentCopyIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/doc_on_doc.svg"); }
+[data-testid="DashboardIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/square_grid_2x2.svg"); }
+[data-testid="DeleteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/trash.svg"); }
+[data-testid="DownloadIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/arrow_down_to_line.svg"); }
+[data-testid="EditIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/pencil.svg"); }
+[data-testid="ExpandLessIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/chevron_up.svg"); }
+[data-testid="ExpandMoreIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/chevron_down.svg"); }
+[data-testid="ExploreIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/compass.svg"); }
+[data-testid="FavoriteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/heart.svg"); }
+[data-testid="FileDownloadIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/arrow_down_to_line.svg"); }
+[data-testid="FilterAltIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/line_horizontal_3_decrease.svg"); }
+[data-testid="FolderIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/folder.svg"); }
+[data-testid="GroupAddIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/person_badge_plus.svg"); }
+[data-testid="GroupsIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/person_3.svg"); }
+[data-testid="HomeIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/house.svg"); }
+[data-testid="ImageIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/photo.svg"); }
+[data-testid="InfoIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/info_circle.svg"); }
+[data-testid="LiveTvIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/tv.svg"); }
+[data-testid="LogoutIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/square_arrow_right.svg"); }
+[data-testid="MenuIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/bars.svg"); }
+[data-testid="MoreVertIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/ellipsis_vertical.svg"); }
+[data-testid="MovieIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/film.svg"); }
+[data-testid="MusicNoteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/music_note.svg"); }
+[data-testid="NavigateBeforeIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/chevron_left.svg"); }
+[data-testid="NavigateNextIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/chevron_right.svg"); }
+[data-testid="NotificationsIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/bell.svg"); }
+[data-testid="OpenInNewIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/arrow_up_right_square.svg"); }
+[data-testid="PeopleIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/person_2.svg"); }
+[data-testid="PersonAddIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/person_badge_plus.svg"); }
+[data-testid="PersonRemoveIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/person_badge_minus.svg"); }
+[data-testid="PhonelinkLockIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/lock_shield.svg"); }
+[data-testid="PhotoIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/photo.svg"); }
+[data-testid="PlaylistAddIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/text_badge_plus.svg"); }
+[data-testid="RefreshIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/arrow_clockwise.svg"); }
+[data-testid="ScheduleIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/clock.svg"); }
+[data-testid="SearchIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/search.svg"); }
+[data-testid="SettingsIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/gear_alt.svg"); }
+[data-testid="SettingsRemoteIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/tv.svg"); }
+[data-testid="ShuffleIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/shuffle.svg"); }
+[data-testid="SortByAlphaIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/arrow_up_arrow_down.svg"); }
+[data-testid="StarIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/star.svg"); }
+[data-testid="StopIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/stop.svg"); }
+[data-testid="TheatersIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/film.svg"); }
+[data-testid="TvIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/tv.svg"); }
+[data-testid="VideocamIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/videocam.svg"); }
+[data-testid="VisibilityIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/eye.svg"); }
+[data-testid="VisibilityOffIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/eye_slash.svg"); }
+[data-testid="WarningIcon"] { --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/exclamationmark_triangle.svg"); }
 
 /* =========================
    Header
@@ -137,16 +328,16 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"])::after {
     font-size: 0.9375rem;
 }
 
-/* Swap the Jellyfin logo for an outlined home icon from the same set as the other nav icons */
+/* Swap the Jellyfin logo for the home icon from the same set as the other nav icons */
 header.MuiAppBar-root .MuiButton-root img[src*="icon-transparent"] {
     display: none !important;
 }
 
 header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) .MuiButton-startIcon::before {
-    content: "home";
+    content: "house";
     display: block;
-    font-family: "Material Symbols Rounded";
-    font-size: 20px;
+    font-family: "Framework7 Icons";
+    font-size: 18px;
     font-weight: normal;
     line-height: 1;
     -webkit-font-feature-settings: "liga";
@@ -309,11 +500,23 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) .MuiButt
     background-color: var(--card-white) !important;
 }
 
-/* Episode count and watched badges, top right and bottom right (both card layouts) */
-.card :is(.playedIndicator, .countIndicator),
-.card .playstatebutton-icon-played::before,
-.card .cardOverlayButton-br button[title="Watched"] .MuiSvgIcon-root[data-testid="CheckIcon"] {
+/* Episode count and watched badges, top right */
+.card :is(.playedIndicator, .countIndicator) {
     background: var(--card-white);
+}
+
+/* Watched button on library posters (newer layout): same circle check as everywhere else,
+   filled in the badge white when watched instead of Jellyfin's red check */
+.card .cardOverlayButton-br .MuiSvgIcon-root[data-testid="CheckIcon"] {
+    --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/checkmark_circle.svg");
+}
+
+.card .cardOverlayButton-br .MuiSvgIcon-root[data-testid="CheckIcon"].MuiSvgIcon-colorError {
+    --symbol: url("https://cdn.jsdelivr.net/npm/framework7-icons@5.0.5/svg/checkmark_circle_fill.svg");
+    --symbol-paths: 0;
+    background-color: var(--card-white);
+    -webkit-mask: var(--symbol) center / 90% no-repeat;
+    mask: var(--symbol) center / 90% no-repeat;
 }
 
 /* Library posters use Jellyfin's newer card layout, with a real <img> instead of a background */
@@ -447,6 +650,12 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) .MuiButt
     transition: none !important;
 }
 
+/* Pointer anywhere on an episode row, like on posters (clicking it opens the episode: jellyfin-episode-rows.js) */
+.listItem[data-type="Episode"],
+.listItem[data-type="Episode"] * {
+    cursor: pointer !important;
+}
+
 /* Play button only shows on hover, like on posters (touch screens keep it visible) */
 @media (hover: hover) {
     .listItemImage .listItemImageButton {
@@ -489,6 +698,128 @@ header.MuiAppBar-root .MuiButton-root:has(img[src*="icon-transparent"]) .MuiButt
 /* Hide the Rotten Tomatoes score, keep the star rating */
 .mediaInfoCriticRating {
     display: none !important;
+}
+
+/* Resume and restart: the same height (restart is a square), and they don't scale on hover since they have a box.
+   Height = the icon (1.6em) plus Resume's top and bottom padding (0.4em each); the border is counted inside */
+#itemDetailPage :is(.btnPlay, .btnReplay) {
+    box-sizing: border-box;
+    height: 2.4em;
+}
+
+#itemDetailPage .btnReplay {
+    width: 2.4em;
+    padding: 0 !important;
+}
+
+#itemDetailPage :is(.btnPlay, .btnReplay):hover,
+#itemDetailPage:has(.btnReplay.hide) .btnPlayTrailer:hover {
+    transform: none !important;
+}
+
+/* Restart's icon in the same soft white as the other buttons (Abyss' hover still turns it black) */
+#itemDetailPage .btnReplay {
+    color: var(--card-white);
+}
+
+/* Spacing between the buttons: --button-gap (see Buttons), half of Abyss' 8px between buttons and 8px around each icon */
+#itemDetailPage .detailButton {
+    margin-right: var(--button-gap) !important;
+}
+
+:is(.layout-desktop, .layout-tv) #itemDetailPage .btnPlay {
+    margin-right: calc(var(--button-gap) * 1.5) !important; /* Abyss: 12px */
+}
+
+/* The space around each borderless icon (also its hover area) */
+#itemDetailPage .detailButton:not(.btnPlay, .btnReplay) {
+    padding: var(--button-gap) !important;
+}
+
+/* Without a restart button, Abyss boxes the trailer button instead: same size and colour as restart */
+#itemDetailPage:has(.btnReplay.hide) .detailButton.btnPlayTrailer {
+    box-sizing: border-box;
+    width: 2.4em;
+    height: 2.4em;
+    padding: 0 !important;
+    color: var(--card-white);
+}
+
+/* Every icon except Resume's at 0.75x, so they sit with the Resume button (Jellyfin's is 1.6em) */
+#itemDetailPage .detailButton:not(.btnPlay) .detailButton-icon {
+    font-size: 1.2em !important;
+}
+
+/* Restart's arrow reads a little bigger than the other icons, so it's a touch smaller still */
+#itemDetailPage .detailButton.btnReplay .detailButton-icon {
+    font-size: 1.08em !important;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+
+/* Space in rows of icon buttons, used everywhere below and on the detail page:
+   between two buttons, and around each icon (so neighbouring icons end up 3x this apart) */
+:root {
+    --button-gap: 4px;
+}
+
+/* Episode and other list rows: info, watched, favorite, more */
+.listItem .listItemButton {
+    margin: 0 var(--button-gap) 0 0 !important;
+    padding: var(--button-gap) !important;
+}
+
+/* The buttons in the bottom-right corner of posters (both card layouts). The gap below each button
+   keeps them as far from the bottom edge as from the side */
+.card .cardOverlayButton-br :is(.cardOverlayButton, .paper-icon-button-light, .MuiIconButton-root) {
+    margin: 0 var(--button-gap) var(--button-gap) 0 !important;
+    padding: var(--button-gap) !important;
+}
+
+/* Jellyfin draws each poster icon in a box 1.5x its size (it used to hold a round badge, now transparent),
+   which left invisible space around every icon: the box is now just the icon */
+.card .cardOverlayButton-br .cardOverlayButtonIcon {
+    width: 1em !important;
+    height: 1em !important;
+}
+
+/* The player's control bar and the bottom now-playing bar */
+:is(#videoOsdPage .videoOsdBottom .buttons, .nowPlayingBar) .paper-icon-button-light {
+    margin: 0 var(--button-gap) 0 0 !important;
+    padding: var(--button-gap) !important;
+}
+
+/* The player's play/pause icon is drawn at 1.8x, so it gets that much extra room on both sides
+   (its icon is about 1.67em wide; 0.8 of that, split over the two sides, is about 0.67em each) */
+#videoOsdPage .videoOsdBottom .buttons .btnPause {
+    margin: 0 calc(var(--button-gap) + 0.67em) 0 0.67em !important; /* the button before it already adds the gap */
+}
+
+/* Icon-only buttons (no box or border) everywhere work like the poster and player buttons:
+   soft white icon, no background, turn white and grow 1.2x instantly on hover, ease back after.
+   Left out: buttons with a box (Resume, restart, the trailer when Abyss boxes it, the round header buttons,
+   floating buttons), the play buttons (they scale their icon instead) and the A-Z letter bar */
+:root :is(.paper-icon-button-light, #itemDetailPage .detailButton, .MuiIconButton-root):not(
+    #itemDetailPage .btnPlay, #itemDetailPage .btnReplay, #itemDetailPage:has(.btnReplay.hide) .btnPlayTrailer,
+    header.MuiAppBar-root *, .headerButton, .fab, .cardOverlayFab-primary, .listItemImageButton, #videoOsdPage .btnPause, .alphaPickerButton
+) {
+    color: var(--card-white);
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    transition: transform 0.37s var(--abyss-ease), color 0.37s var(--abyss-ease) !important;
+}
+
+:root :is(.paper-icon-button-light, #itemDetailPage .detailButton, .MuiIconButton-root):not(
+    #itemDetailPage .btnPlay, #itemDetailPage .btnReplay, #itemDetailPage:has(.btnReplay.hide) .btnPlayTrailer,
+    header.MuiAppBar-root *, .headerButton, .fab, .cardOverlayFab-primary, .listItemImageButton, #videoOsdPage .btnPause, .alphaPickerButton
+):hover:not(:disabled) {
+    color: rgb(var(--abyss-accent)) !important;
+    transform: scale(1.2);
+    transition: none !important;
 }
 
 /* =========================
@@ -605,14 +936,24 @@ body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.M
     filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.4));
 }
 
-/* Control bar flush with the bottom and both sides, square corners */
+/* Control bar: flush with the bottom and both sides, square corners, blurred black glass.
+   One blur on the bar itself: Abyss also blurs the controls inside it, and a blur inside a blur shows nothing.
+   Jellyfin's will-change hint is turned off because it can stop the blur from showing in Firefox */
 #videoOsdPage .videoOsdBottom {
     margin: 0 !important;
     border-radius: 0 !important;
+    will-change: auto !important;
+    background: rgba(0, 0, 0, 0.5) !important; /* Abyss' black; raise 0.5 for a darker bar */
+    -webkit-backdrop-filter: blur(var(--abyss-glass-blur)) !important;
+    backdrop-filter: blur(var(--abyss-glass-blur)) !important;
 }
 
 #videoOsdPage .videoOsdBottom .osdControls {
     border-radius: 0 !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
 }
 
 /* Hide the favorite button */
