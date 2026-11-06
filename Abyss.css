@@ -961,6 +961,11 @@ body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.M
     display: none !important;
 }
 
+/* Hide the volume (and brightness) popup that appears when changing the volume */
+.iconOsd {
+    display: none !important;
+}
+
 /* Hide the "Fetching additional data" status line */
 #videoOsdPage .osdMediaStatus,
 #videoOsdPage .videoOsdBottom div:has(> .material-icons.sync) {
