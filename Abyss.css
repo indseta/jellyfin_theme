@@ -818,12 +818,3 @@ body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.M
 #videoOsdPage .videoOsdBottom .btnFastForward::before {
     content: "forward_10";
 }
-
-/* =========================
-   Load marker (keep this at the very end)
-   ========================= */
-
-/* Tells jellyfin-branding.js this CSS has arrived, so it can hold the startup screen until it's ready */
-:root {
-    --custom-css-loaded: 1;
-}
