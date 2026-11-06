@@ -605,63 +605,14 @@ body:has(#videoOsdPage:not(.hide)) :is(.skinHeader .MuiTypography-root, header.M
     filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.4));
 }
 
-/* Control bar flush with the bottom and both sides, square corners.
-   The blur and tint sit on a layer behind the controls that fades into the video at the top,
-   instead of on the bar itself (a fade on the bar would also cut off the seek preview) */
+/* Control bar flush with the bottom and both sides, square corners */
 #videoOsdPage .videoOsdBottom {
-    --osd-fade: 3.5em; /* height of the fade above the bar */
     margin: 0 !important;
     border-radius: 0 !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    /* The bar must stay fully opaque or the blur layer can't see the video, so its contents fade instead.
-       The visibility transition keeps Jellyfin's "hide once faded out" step working */
-    will-change: auto !important;
-    opacity: 1 !important;
-    transition: visibility 0.3s ease-out !important;
 }
 
 #videoOsdPage .videoOsdBottom .osdControls {
     border-radius: 0 !important;
-    background: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    box-shadow: none !important;
-}
-
-#videoOsdPage .videoOsdBottom::before {
-    content: "";
-    position: absolute;
-    inset: calc(-1 * var(--osd-fade)) 0 0;
-    z-index: -1;
-    pointer-events: none;
-    background: rgba(var(--abyss-glass-tint), 0.69);
-    -webkit-backdrop-filter: blur(var(--abyss-glass-blur));
-    backdrop-filter: blur(var(--abyss-glass-blur));
-    /* Eased fade: transparent at the top, full strength where the bar starts */
-    --osd-fade-mask: linear-gradient(to bottom,
-        transparent,
-        rgba(0, 0, 0, 0.16) calc(var(--osd-fade) * 0.25),
-        rgba(0, 0, 0, 0.5) calc(var(--osd-fade) * 0.5),
-        rgba(0, 0, 0, 0.84) calc(var(--osd-fade) * 0.75),
-        #000 var(--osd-fade));
-    -webkit-mask: var(--osd-fade-mask);
-    mask: var(--osd-fade-mask);
-}
-
-/* Show/hide fade, same timing as Jellyfin's */
-#videoOsdPage .videoOsdBottom > *,
-#videoOsdPage .videoOsdBottom::before {
-    transition: opacity 0.3s ease-out;
-}
-
-#videoOsdPage .videoOsdBottom-hidden {
-    visibility: hidden;
-}
-
-#videoOsdPage .videoOsdBottom-hidden > *,
-#videoOsdPage .videoOsdBottom-hidden::before {
-    opacity: 0;
 }
 
 /* Hide the favorite button */
